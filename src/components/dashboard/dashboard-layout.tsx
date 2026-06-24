@@ -96,16 +96,23 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             </nav>
 
             <div className="p-4 border-t border-slate-200">
-              <Link href="/auth/login">
-                <Button
-                  variant="ghost"
-                  size="md"
-                  className="w-full justify-start text-slate-600 hover:text-red-500"
-                >
-                  <LogOut className="w-5 h-5 mr-3" />
-                  Sign Out
-                </Button>
-              </Link>
+              <Button
+                variant="ghost"
+                size="md"
+                className="w-full justify-start text-slate-600 hover:text-red-500"
+                onClick={async () => {
+                  const { createClient } = await import('@supabase/supabase-js');
+                  const supabase = createClient(
+                    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+                  );
+                  await supabase.auth.signOut();
+                  window.location.href = '/auth/login';
+                }}
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Sign Out
+              </Button>
             </div>
           </div>
         </aside>

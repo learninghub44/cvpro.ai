@@ -19,10 +19,16 @@ export default function LoginPage() {
     setError('');
 
     try {
-      // TODO: Implement Supabase authentication
-      console.log('Login:', { email, password });
-    } catch (err) {
-      setError('Login failed. Please try again.');
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) throw authError;
+      window.location.href = '/dashboard';
+    } catch (err: any) {
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }

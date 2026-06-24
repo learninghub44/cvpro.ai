@@ -27,10 +27,20 @@ export default function RegisterPage() {
     }
 
     try {
-      // TODO: Implement Supabase authentication
-      console.log('Register:', { fullName, email, password });
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      const { error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: fullName } },
+      });
+      if (authError) throw authError;
+      window.location.href = '/dashboard';
+    } catch (err: any) {
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
