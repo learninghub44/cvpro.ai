@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
@@ -47,7 +48,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     <div className="min-h-screen bg-background">
       {/* Mobile header */}
       <div className="lg:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-primary">CVPro AI</h1>
+        <div className="flex items-center space-x-2">
+          <Image src="/logo.svg" alt="CVPro AI" width={28} height={28} />
+          <h1 className="text-xl font-bold text-primary tracking-tight">CVPro AI</h1>
+        </div>
         <Button
           variant="ghost"
           size="sm"
@@ -67,10 +71,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
           <div className="flex flex-col h-full">
             <div className="p-6 border-b border-slate-200">
               <Link href="/dashboard" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-primary">CVPro AI</span>
+                <Image src="/logo.svg" alt="CVPro AI" width={32} height={32} />
+                <span className="text-xl font-bold text-primary tracking-tight">CVPro AI</span>
               </Link>
             </div>
             
