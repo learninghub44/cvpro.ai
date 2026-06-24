@@ -127,7 +127,7 @@ export default function UploadPage() {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="file-upload">
-                    <Button variant="outline" size="md" asChild>
+                    <Button variant="outline" size="md">
                       <span>Browse Files</span>
                     </Button>
                   </label>

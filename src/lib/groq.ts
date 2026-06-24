@@ -1,8 +1,14 @@
 import Groq from 'groq-sdk';
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+function getGroq() {
+  const apiKey = process.env.GROQ_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('GROQ_API_KEY is required to call Groq-powered API routes.');
+  }
+
+  return new Groq({ apiKey });
+}
 
 export async function analyzeCV(cvText: string) {
   const prompt = `
@@ -29,7 +35,7 @@ export async function analyzeCV(cvText: string) {
     }
   `;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'llama3-70b-8192',
     response_format: { type: 'json_object' },
@@ -55,7 +61,7 @@ export async function rewriteCV(cvText: string) {
     }
   `;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'llama3-70b-8192',
     response_format: { type: 'json_object' },
@@ -81,7 +87,7 @@ export async function generateCoverLetter(cvText: string, jobTitle: string, comp
     }
   `;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'llama3-70b-8192',
     response_format: { type: 'json_object' },
@@ -113,7 +119,7 @@ export async function generateInterviewQuestions(cvText: string, jobDescription:
     }
   `;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'llama3-70b-8192',
     response_format: { type: 'json_object' },
@@ -141,7 +147,7 @@ export async function analyzeJobMatch(cvText: string, jobDescription: string) {
     }
   `;
 
-  const response = await groq.chat.completions.create({
+  const response = await getGroq().chat.completions.create({
     messages: [{ role: 'user', content: prompt }],
     model: 'llama3-70b-8192',
     response_format: { type: 'json_object' },
