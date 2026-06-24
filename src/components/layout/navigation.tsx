@@ -29,9 +29,7 @@ export const Navigation = () => {
             <Link href="/#faq" className="text-slate-600 hover:text-primary transition-colors">
               FAQ
             </Link>
-            <Link href="/contact" className="text-slate-600 hover:text-primary transition-colors">
-              Contact
-            </Link>
+
           </div>
           
           <div className="flex items-center space-x-4">
